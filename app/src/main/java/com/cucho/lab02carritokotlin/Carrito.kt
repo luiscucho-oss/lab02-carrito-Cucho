@@ -47,6 +47,7 @@ fun main() {
     val total = calcularTotal(subtotal, igv)
     val descuento = calcularDescuento(total)
     val totalConDescuento = total - descuento
+    val productoBuscado = buscarProducto(carrito, "Mouse Logitech")
 
     println()
 
@@ -72,6 +73,40 @@ fun main() {
 
     println(String.format("Descuento      : S/ %8.2f", descuento))
     println(String.format("TOTAL FINAL    : S/ %8.2f", totalConDescuento))
+
+    println()
+    println("--------- BUSCAR PRODUCTO ---------")
+
+    if (productoBuscado != null) {
+
+        println(
+            "Producto encontrado: ${productoBuscado.nombre}"
+        )
+
+    } else {
+
+        println(
+            "Producto no encontrado"
+        )
+    }
+
+    println()
+    println("--------- ELIMINAR PRODUCTO ---------")
+
+    carrito.removeIf {
+        it.nombre == "Mouse Logitech"
+    }
+
+    println(
+        "Se elimino: Mouse Logitech"
+    )
+
+    println()
+    println(
+        "----- CARRITO DESPUES DE ELIMINAR -----"
+    )
+
+    mostrarDetalle(carrito)
 }
 
 fun mostrarDetalle(productos: List<Producto>) {
@@ -103,4 +138,8 @@ fun calcularDescuento(total: Double): Double {
         total > 3000 -> total * 0.05
         else -> 0.0
     }
+}
+
+fun buscarProducto(productos: List<Producto>, nombre: String): Producto? {
+    return productos.find { it.nombre == nombre }
 }
